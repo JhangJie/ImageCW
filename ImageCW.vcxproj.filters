@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="來源檔案">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="標頭檔">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="資源檔">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="來源檔案\CNN">
+      <UniqueIdentifier>{2e5e74ef-bdfa-401e-b31f-df0b4c1b9941}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="標頭檔\CNN">
+      <UniqueIdentifier>{7c6abb9c-ba4a-4c1f-b55c-27d955d28d76}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageCW.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="DNN.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="FFT.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgMath.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgMatting.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgObjDetection.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="ImgProcessing.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Mat.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="minst.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="CNN.h">
+      <Filter>標頭檔\CNN</Filter>
+    </ClInclude>
+    <ClInclude Include="CNNMat.h">
+      <Filter>標頭檔\CNN</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageCW.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="FFT.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgMatting.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgObjDetection.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgProcessing.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="Mat.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="minst.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+    <ClCompile Include="CNN.cpp">
+      <Filter>來源檔案\CNN</Filter>
+    </ClCompile>
+    <ClCompile Include="CNNMat.cpp">
+      <Filter>來源檔案\CNN</Filter>
+    </ClCompile>
+    <ClCompile Include="ImgMath.cpp">
+      <Filter>來源檔案</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

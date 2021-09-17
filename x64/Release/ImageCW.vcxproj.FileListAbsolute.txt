@@ -1,0 +1,2 @@
+C:\Users\CWChang\Desktop\ImageCW\x64\Release\ImageCW.dll
+C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\x64\Release\ImageCW.dll

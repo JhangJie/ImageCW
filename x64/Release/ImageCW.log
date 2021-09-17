@@ -1,0 +1,14 @@
+﻿  ImgMatting.cpp
+C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\ImgMatting.cpp(25,18): warning C4244: 'return': 將 'float' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\ImgMatting.cpp(30,15): warning C4244: '=': 將 'int' 轉換為 'float'，由於類型不同，可能導致資料遺失
+C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\ImgMatting.cpp(300,30): warning C4244: '=': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\ImgMatting.cpp(304,30): warning C4244: '=': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\ImgMatting.cpp(376,32): warning C4244: '=': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\ImgMatting.cpp(380,32): warning C4244: '=': 將 'double' 轉換為 'int'，由於類型不同，可能導致資料遺失
+C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\ImgMatting.cpp(712,40): warning C4244: '=': 將 'double' 轉換為 'unsigned char'，由於類型不同，可能導致資料遺失
+     正在建立程式庫 C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\x64\Release\ImageCW.lib 和物件 C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\x64\Release\ImageCW.exp
+  正在產生程式碼
+  Previous IPDB and IOBJ mismatch, fall back to full compilation.
+  All 1278 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  已完成程式碼產生
+  ImageCW.vcxproj -> C:\Users\CWChang\Desktop\Img處理\VS2019\ImageCW\x64\Release\ImageCW.dll
