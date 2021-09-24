@@ -80,7 +80,7 @@ void CNNNet::test_mat1()
 	cnnmat.savemat(cov3, covsize, "C:\\Users\\CWChang\\Desktop\\Img處理\\CNN\\cov3.ma");
 }
 
-void CNNNet::test_cnn()	//测试cnn模块是否工作正常
+void CNNNet::test_cnn()
 {
 	Minst minst;
 	LabelArr testLabel = minst.read_Lable("C:\\Users\\CWChang\\Desktop\\Img處理\\CNN\\train-labels.idx1-ubyte");
@@ -143,9 +143,8 @@ CovLayer* CNNNet::initCovLayer(int inputWidth, int inputHeight, int mapSize, int
 	covL->inChannels = inChannels;
 	covL->outChannels = outChannels;
 
-	covL->isFullConnect = true; // 默认为全连接
+	covL->isFullConnect = true;
 
-	// 权重空间的初始化，先行再列调用，[r][c]
 	int i, j, c, r;
 	srand((unsigned)time(NULL));
 	covL->mapData = (float****)malloc(inChannels * sizeof(float***));
@@ -166,7 +165,7 @@ CovLayer* CNNNet::initCovLayer(int inputWidth, int inputHeight, int mapSize, int
 			}
 		}
 	}
-	// 权重梯度变化
+
 	covL->dmapData = (float****)malloc(inChannels * sizeof(float***));
 	for (i = 0; i < inChannels; i++) 
 	{
@@ -246,8 +245,7 @@ OutLayer* CNNNet::initOutLayer(int inputNum, int outputNum)
 	outL->v = (float*)calloc(outputNum, sizeof(float));
 	outL->y = (float*)calloc(outputNum, sizeof(float));
 
-	// 权重的初始化
-	outL->wData = (float**)malloc(outputNum * sizeof(float*)); // 输入行，输出列
+	outL->wData = (float**)malloc(outputNum * sizeof(float*));
 	int i, j;
 	srand((unsigned)time(NULL));
 	for (i = 0; i < outputNum; i++) 
@@ -255,7 +253,7 @@ OutLayer* CNNNet::initOutLayer(int inputNum, int outputNum)
 		outL->wData[i] = (float*)malloc(inputNum * sizeof(float));
 		for (j = 0; j < inputNum; j++) 
 		{
-			float randnum = (((float)rand() / (float)RAND_MAX) - 0.5) * 2; // 产生一个-1到1的随机数
+			float randnum = (((float)rand() / (float)RAND_MAX) - 0.5) * 2;
 			outL->wData[i][j] = randnum * sqrt((float)6.0 / (float)(inputNum + outputNum));
 		}
 	}
@@ -263,7 +261,7 @@ OutLayer* CNNNet::initOutLayer(int inputNum, int outputNum)
 	return outL;
 }
 
-int CNNNet::vecmaxIndex(float* vec, int veclength)// 返回向量最大数的序号
+int CNNNet::vecmaxIndex(float* vec, int veclength)
 {
 	int i;
 	float maxnum = -1.0;
@@ -279,11 +277,10 @@ int CNNNet::vecmaxIndex(float* vec, int veclength)// 返回向量最大数的序
 	return maxIndex;
 }
 
-// 测试cnn函数
 float CNNNet::cnntest(CNN* cnn, ImgArr inputData, LabelArr outputData, int testNum)
 {
 	int n = 0;
-	int incorrectnum = 0;  //错误预测的数目
+	int incorrectnum = 0;
 	for (n = 0; n < testNum; n++) 
 	{
 		cnnff(cnn, inputData->ImgPtr[n].ImgData);
@@ -302,7 +299,7 @@ void CNNNet::savecnn(CNN* cnn, const char* filename)
 	if (fp == NULL)
 		printf("write file failed\n");
 	int i, j, r;
-	// C1的数据
+	// C1的數據
 	for (i = 0; i < cnn->C1->inChannels; i++)
 		for (j = 0; j < cnn->C1->outChannels; j++)
 			for (r = 0; r < cnn->C1->mapSize; r++)
@@ -310,7 +307,7 @@ void CNNNet::savecnn(CNN* cnn, const char* filename)
 
 	fwrite(cnn->C1->basicData, sizeof(float), cnn->C1->outChannels, fp);
 
-	// C3网络
+	// C3網路
 	for (i = 0; i < cnn->C3->inChannels; i++)
 		for (j = 0; j < cnn->C3->outChannels; j++)
 			for (r = 0; r < cnn->C3->mapSize; r++)
@@ -318,14 +315,14 @@ void CNNNet::savecnn(CNN* cnn, const char* filename)
 
 	fwrite(cnn->C3->basicData, sizeof(float), cnn->C3->outChannels, fp);
 
-	// O5输出层
+	// O5輸出層
 	for (i = 0; i < cnn->O5->outputNum; i++)
 		fwrite(cnn->O5->wData[i], sizeof(float), cnn->O5->inputNum, fp);
 	fwrite(cnn->O5->basicData, sizeof(float), cnn->O5->outputNum, fp);
 
 	fclose(fp);
 }
-// 导入cnn的数据
+
 void CNNNet::importcnn(CNN* cnn, const char* filename)
 {
 	FILE* fp = NULL;
@@ -333,7 +330,7 @@ void CNNNet::importcnn(CNN* cnn, const char* filename)
 	if (fp == NULL)
 		printf("write file failed\n");
 	int i, j, c, r;
-	// C1的数据
+	// C1的數據
 	for (i = 0; i < cnn->C1->inChannels; i++)
 		for (j = 0; j < cnn->C1->outChannels; j++)
 			for (r = 0; r < cnn->C1->mapSize; r++)
@@ -347,7 +344,7 @@ void CNNNet::importcnn(CNN* cnn, const char* filename)
 	for (i = 0; i < cnn->C1->outChannels; i++)
 		fread(&cnn->C1->basicData[i], sizeof(float), 1, fp);
 
-	// C3网络
+	// C3網路
 	for (i = 0; i < cnn->C3->inChannels; i++)
 		for (j = 0; j < cnn->C3->outChannels; j++)
 			for (r = 0; r < cnn->C3->mapSize; r++)
@@ -357,7 +354,7 @@ void CNNNet::importcnn(CNN* cnn, const char* filename)
 	for (i = 0; i < cnn->C3->outChannels; i++)
 		fread(&cnn->C3->basicData[i], sizeof(float), 1, fp);
 
-	// O5输出层
+	// O5输出層
 	for (i = 0; i < cnn->O5->outputNum; i++)
 		for (j = 0; j < cnn->O5->inputNum; j++)
 			fread(&cnn->O5->wData[i][j], sizeof(float), 1, fp);
@@ -371,7 +368,6 @@ void CNNNet::importcnn(CNN* cnn, const char* filename)
 void CNNNet::cnntrain(CNN* cnn, ImgArr inputData, LabelArr outputData, CNNOpts opts, int trainNum)
 {
 	Minst minst;
-	// 学习训练误差曲线
 	cnn->L = (float*)malloc(trainNum * sizeof(float));
 	int e;
 	for (e = 0; e < opts.numepochs; e++) 
@@ -380,16 +376,15 @@ void CNNNet::cnntrain(CNN* cnn, ImgArr inputData, LabelArr outputData, CNNOpts o
 		for (n = 0; n < trainNum; n++) 
 		{
 			//printf("%d\n",n);
-			cnnff(cnn, inputData->ImgPtr[n].ImgData);		//前向传播，这里主要计算各
-			cnnbp(cnn, outputData->LabelPtr[n].LabelData);  //后向传播，这里主要计算各神经元的误差梯度
+			cnnff(cnn, inputData->ImgPtr[n].ImgData);
+			cnnbp(cnn, outputData->LabelPtr[n].LabelData);
 
 			char* filedir = (char*)"C:\\Users\\CWChang\\Desktop\\Img處理\\CNN\\CNNData\\";
 			const char* filename = minst.combine_strings(filedir, minst.combine_strings(minst.intTochar(n), (char*)".cnn"));
 			savecnndata(cnn, filename, inputData->ImgPtr[n].ImgData);
-			cnnapplygrads(cnn, opts, inputData->ImgPtr[n].ImgData);		//更新权重
+			cnnapplygrads(cnn, opts, inputData->ImgPtr[n].ImgData);
 			cnnclear(cnn);
-
-			//计算并保存误差能量
+			
 			float l = 0.0;
 			int i;
 			for (i = 0; i < cnn->O5->outputNum; i++)
@@ -402,15 +397,12 @@ void CNNNet::cnntrain(CNN* cnn, ImgArr inputData, LabelArr outputData, CNNOpts o
 	}
 }
 
-// 这里InputData是图像数据，inputData[r][c],r行c列，这里根各权重模板是一致的
 void CNNNet::cnnff(CNN* cnn, float** inputData)
 {
 	CNNMat cnnmat;
 	int outSizeW = cnn->S2->inputWidth;
 	int outSizeH = cnn->S2->inputHeight;
-	// 第一层的传播
 	int i, j, r, c;
-	// 第一层输出数据
 	nSize mapSize = { cnn->C1->mapSize,cnn->C1->mapSize };
 	nSize inSize = { cnn->C1->inputWidth,cnn->C1->inputHeight };
 	nSize outSize = { cnn->S2->inputWidth,cnn->S2->inputHeight };
@@ -429,7 +421,6 @@ void CNNNet::cnnff(CNN* cnn, float** inputData)
 				cnn->C1->y[i][r][c] = activation_Sigma(cnn->C1->v[i][r][c], cnn->C1->basicData[i]);
 	}
 
-	// 第二层的输出传播S2，采样层
 	outSize.c = cnn->C3->inputWidth;
 	outSize.r = cnn->C3->inputHeight;
 	inSize.c = cnn->S2->inputWidth;
@@ -440,7 +431,6 @@ void CNNNet::cnnff(CNN* cnn, float** inputData)
 			avgPooling(cnn->S2->y[i], outSize, cnn->C1->y[i], inSize, cnn->S2->mapSize);
 	}
 
-	// 第三层输出传播,这里是全连接
 	outSize.c = cnn->S4->inputWidth;
 	outSize.r = cnn->S4->inputHeight;
 	inSize.c = cnn->C3->inputWidth;
@@ -462,7 +452,6 @@ void CNNNet::cnnff(CNN* cnn, float** inputData)
 				cnn->C3->y[i][r][c] = activation_Sigma(cnn->C3->v[i][r][c], cnn->C3->basicData[i]);
 	}
 
-	// 第四层的输出传播
 	inSize.c = cnn->S4->inputWidth;
 	inSize.r = cnn->S4->inputHeight;
 	outSize.c = inSize.c / cnn->S4->mapSize;
@@ -472,9 +461,7 @@ void CNNNet::cnnff(CNN* cnn, float** inputData)
 		if (cnn->S4->poolType == AvePool)
 			avgPooling(cnn->S4->y[i], outSize, cnn->C3->y[i], inSize, cnn->S4->mapSize);
 	}
-
-	// 输出层O5的处理
-	// 首先需要将前面的多维输出展开成一维向量
+	
 	float* O5inData = (float*)malloc((cnn->O5->inputNum) * sizeof(float));
 	for (i = 0; i < (cnn->S4->outChannels); i++)
 		for (r = 0; r < outSize.r; r++)
@@ -488,8 +475,7 @@ void CNNNet::cnnff(CNN* cnn, float** inputData)
 	free(O5inData);
 }
 
-// 激活函数 input是数据，inputNum说明数据数目，bas表明偏置
-float CNNNet::activation_Sigma(float input, float bas) // sigma激活函数
+float CNNNet::activation_Sigma(float input, float bas)
 {
 	float temp = input + bas;
 	return (float)1.0 / ((float)(1.0 + exp(-temp)));
@@ -515,8 +501,7 @@ void CNNNet::avgPooling(float** output, nSize outputSize, float** input, nSize i
 		}
 }
 
-// 单层全连接神经网络的前向传播
-float CNNNet::vecMulti(float* vec1, float* vec2, int vecL)// 两向量相乘
+float CNNNet::vecMulti(float* vec1, float* vec2, int vecL)
 {
 	int i;
 	float m = 0;
@@ -535,25 +520,21 @@ void CNNNet::nnff(float* output, float* input, float** wdata, float* bas, nSize 
 		output[i] = vecMulti(input, wdata[i], w) + bas[i];
 }
 
-float CNNNet::sigma_derivation(float y)		//Logic激活函数的自变量微分
+float CNNNet::sigma_derivation(float y)
 {
-	return y * (1 - y);						//这里y是指经过激活函数的输出值，而不是自变量
+	return y * (1 - y);
 }
 
-void CNNNet::cnnbp(CNN* cnn, float* outputData)		//网络的后向传播
+void CNNNet::cnnbp(CNN* cnn, float* outputData)
 {
 	CNNMat cnnmat;
-	int i, j, c, r; // 将误差保存到网络中
+	int i, j, c, r;
 	for (i = 0; i < cnn->O5->outputNum; i++)
 		cnn->e[i] = cnn->O5->y[i] - outputData[i];
-
-	/*从后向前反向计算*/
-	// 输出层O5
+	
 	for (i = 0; i < cnn->O5->outputNum; i++)
 		cnn->O5->d[i] = cnn->e[i] * sigma_derivation(cnn->O5->y[i]);
-
-	// S4层，传递到S4层的误差
-	// 这里没有激活函数
+	
 	nSize outSize = { cnn->S4->inputWidth / cnn->S4->mapSize,cnn->S4->inputHeight / cnn->S4->mapSize };
 	for (i = 0; i < cnn->S4->outChannels; i++)
 		for (r = 0; r < outSize.r; r++)
@@ -563,12 +544,9 @@ void CNNNet::cnnbp(CNN* cnn, float* outputData)		//网络的后向传播
 					int wInt = i * outSize.c * outSize.r + r * outSize.c + c;
 					cnn->S4->d[i][r][c] = cnn->S4->d[i][r][c] + cnn->O5->d[j] * cnn->O5->wData[j][wInt];
 				}
-
-	// C3层
-	// 由S4层传递的各反向误差,这里只是在S4的梯度上扩充一倍
+	
 	int mapdata = cnn->S4->mapSize;
 	nSize S4dSize = { cnn->S4->inputWidth / cnn->S4->mapSize,cnn->S4->inputHeight / cnn->S4->mapSize };
-	// 这里的Pooling是求平均，所以反向传递到下一神经元的误差梯度没有变化
 	for (i = 0; i < cnn->C3->outChannels; i++) 
 	{
 		float** C3e = cnnmat.UpSample(cnn->S4->d[i], S4dSize, cnn->S4->mapSize, cnn->S4->mapSize);
@@ -580,8 +558,6 @@ void CNNNet::cnnbp(CNN* cnn, float* outputData)		//网络的后向传播
 		free(C3e);
 	}
 
-	// S2层，S2层没有激活函数，这里只有卷积层有激活函数部分
-	// 由卷积层传递给采样层的误差梯度，这里卷积层共有6*12个卷积模板
 	outSize.c = cnn->C3->inputWidth;
 	outSize.r = cnn->C3->inputHeight;
 	nSize inSize = { cnn->S4->inputWidth,cnn->S4->inputHeight };
@@ -599,14 +575,11 @@ void CNNNet::cnnbp(CNN* cnn, float* outputData)		//网络的后向传播
 		/*
 		for(r=0;r<cnn->C3->inputHeight;r++)
 			for(c=0;c<cnn->C3->inputWidth;c++)
-				// 这里本来用于采样的激活
 		*/
 	}
 
-	// C1层，卷积层
 	mapdata = cnn->S2->mapSize;
 	nSize S2dSize = { cnn->S2->inputWidth / cnn->S2->mapSize,cnn->S2->inputHeight / cnn->S2->mapSize };
-	// 这里的Pooling是求平均，所以反向传递到下一神经元的误差梯度没有变化
 	for (i = 0; i < cnn->C1->outChannels; i++) 
 	{
 		float** C1e = cnnmat.UpSample(cnn->S2->d[i], S2dSize, cnn->S2->mapSize, cnn->S2->mapSize);
@@ -619,14 +592,11 @@ void CNNNet::cnnbp(CNN* cnn, float* outputData)		//网络的后向传播
 	}
 }
 
-void CNNNet::cnnapplygrads(CNN* cnn, CNNOpts opts, float** inputData) // 更新权重
+void CNNNet::cnnapplygrads(CNN* cnn, CNNOpts opts, float** inputData) 
 {
-	// 这里存在权重的主要是卷积层和输出层
-	// 更新这两个地方的权重就可以了
 	CNNMat cnnmat;
 	int i, j, r, c;
 
-	// C1层的权重更新
 	nSize dSize = { cnn->S2->inputHeight,cnn->S2->inputWidth };
 	nSize ySize = { cnn->C1->inputHeight,cnn->C1->inputWidth };
 	nSize mapSize = { cnn->C1->mapSize,cnn->C1->mapSize };
@@ -649,7 +619,6 @@ void CNNNet::cnnapplygrads(CNN* cnn, CNNOpts opts, float** inputData) // 更新�
 		cnn->C1->basicData[i] = cnn->C1->basicData[i] - opts.alpha * cnnmat.summat(cnn->C1->d[i], dSize);
 	}
 
-	// C3层的权重更新
 	dSize.c = cnn->S4->inputWidth;
 	dSize.r = cnn->S4->inputHeight;
 	ySize.c = cnn->C3->inputWidth;
@@ -674,8 +643,6 @@ void CNNNet::cnnapplygrads(CNN* cnn, CNNOpts opts, float** inputData) // 更新�
 		cnn->C3->basicData[i] = cnn->C3->basicData[i] - opts.alpha * cnnmat.summat(cnn->C3->d[i], dSize);
 	}
 
-	// 输出层
-	// 首先需要将前面的多维输出展开成一维向量
 	float* O5inData = (float*)malloc((cnn->O5->inputNum) * sizeof(float));
 	nSize outSize = { cnn->S4->inputWidth / cnn->S4->mapSize,cnn->S4->inputHeight / cnn->S4->mapSize };
 	for (i = 0; i < (cnn->S4->outChannels); i++)
@@ -694,9 +661,8 @@ void CNNNet::cnnapplygrads(CNN* cnn, CNNOpts opts, float** inputData) // 更新�
 
 void CNNNet::cnnclear(CNN* cnn)
 {
-	// 将神经元的部分数据清除
 	int j, c, r;
-	// C1网络
+	// C1網路
 	for (j = 0; j < cnn->C1->outChannels; j++) 
 	{
 		for (r = 0; r < cnn->S2->inputHeight; r++) 
@@ -709,7 +675,7 @@ void CNNNet::cnnclear(CNN* cnn)
 			}
 		}
 	}
-	// S2网络
+	// S2網路
 	for (j = 0; j < cnn->S2->outChannels; j++) 
 	{
 		for (r = 0; r < cnn->C3->inputHeight; r++) 
@@ -721,7 +687,7 @@ void CNNNet::cnnclear(CNN* cnn)
 			}
 		}
 	}
-	// C3网络
+	// C3網路
 	for (j = 0; j < cnn->C3->outChannels; j++) 
 	{
 		for (r = 0; r < cnn->S4->inputHeight; r++) 
@@ -734,7 +700,7 @@ void CNNNet::cnnclear(CNN* cnn)
 			}
 		}
 	}
-	// S4网络
+	// S4網路
 	for (j = 0; j < cnn->S4->outChannels; j++) 
 	{
 		for (r = 0; r < cnn->S4->inputHeight / cnn->S4->mapSize; r++) 
@@ -746,7 +712,7 @@ void CNNNet::cnnclear(CNN* cnn)
 			}
 		}
 	}
-	// O5输出
+	// O5輸出
 	for (j = 0; j < cnn->O5->outputNum; j++) 
 	{
 		cnn->O5->d[j] = (float)0.0;
@@ -755,17 +721,16 @@ void CNNNet::cnnclear(CNN* cnn)
 	}
 }
 
-// 这是用于测试的函数
-void CNNNet::savecnndata(CNN* cnn, const char* filename, float** inputdata) // 保存CNN网络中的相关数据
+void CNNNet::savecnndata(CNN* cnn, const char* filename, float** inputdata)
 {
 	FILE* fp = NULL;
 	fp = fopen(filename, "wb");
 	if (fp == NULL)
 		printf("write file failed\n");
 
-	// C1的数据
+	// C1的數據
 	int i, j, r;
-	// C1网络
+	// C1網路
 	for (i = 0; i < cnn->C1->inputHeight; i++)
 		fwrite(inputdata[i], sizeof(float), cnn->C1->inputWidth, fp);
 	for (i = 0; i < cnn->C1->inChannels; i++)
@@ -785,7 +750,7 @@ void CNNNet::savecnndata(CNN* cnn, const char* filename, float** inputdata) // �
 			fwrite(cnn->C1->y[j][r], sizeof(float), cnn->S2->inputWidth, fp);
 	}
 
-	// S2网络
+	// S2網路
 	for (j = 0; j < cnn->S2->outChannels; j++) 
 	{
 		for (r = 0; r < cnn->C3->inputHeight; r++) 
@@ -793,7 +758,7 @@ void CNNNet::savecnndata(CNN* cnn, const char* filename, float** inputdata) // �
 		for (r = 0; r < cnn->C3->inputHeight; r++) 
 			fwrite(cnn->S2->y[j][r], sizeof(float), cnn->C3->inputWidth, fp);
 	}
-	// C3网络
+	// C3網路
 	for (i = 0; i < cnn->C3->inChannels; i++)
 		for (j = 0; j < cnn->C3->outChannels; j++)
 			for (r = 0; r < cnn->C3->mapSize; r++)
@@ -811,7 +776,7 @@ void CNNNet::savecnndata(CNN* cnn, const char* filename, float** inputdata) // �
 			fwrite(cnn->C3->y[j][r], sizeof(float), cnn->S4->inputWidth, fp);
 	}
 
-	// S4网络
+	// S4網路
 	for (j = 0; j < cnn->S4->outChannels; j++) 
 	{
 		for (r = 0; r < cnn->S4->inputHeight / cnn->S4->mapSize; r++) 
@@ -820,7 +785,7 @@ void CNNNet::savecnndata(CNN* cnn, const char* filename, float** inputdata) // �
 			fwrite(cnn->S4->y[j][r], sizeof(float), cnn->S4->inputWidth / cnn->S4->mapSize, fp);
 	}
 
-	// O5输出层
+	// O5输出層
 	for (i = 0; i < cnn->O5->outputNum; i++)
 		fwrite(cnn->O5->wData[i], sizeof(float), cnn->O5->inputNum, fp);
 	fwrite(cnn->O5->basicData, sizeof(float), cnn->O5->outputNum, fp);
